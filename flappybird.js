@@ -1,3 +1,4 @@
+
 //board / canvas
 let board;
 let boardWidth = 360;
@@ -95,7 +96,7 @@ function update() {
         }
 
         if (detectCollision(bird, pipe)) {
-            
+            gameOver = true;
         }
     }
 
