@@ -1,4 +1,3 @@
-
 //board / canvas
 let board;
 let boardWidth = 360;
@@ -82,7 +81,6 @@ function update() {
 
     if (bird.y > board.height) {
         gameOver = true;
-        alert ("Gameover");
     }
 
     //pipes
@@ -97,13 +95,12 @@ function update() {
         }
 
         if (detectCollision(bird, pipe)) {
-            gameOver = true;
-            alert ("You are Dead...Not big surprise!");
+            
         }
     }
 
     // clear pipes so computer don't explode:)
-    while (pipeArray.length > 0 && pipeArray[0].x < 0) {
+    while (pipeArray.length > 0 && pipeArray[0].x < -pipeWidth) {
         pipeArray.shift(); //removes pipe from array
     }
 
@@ -111,6 +108,10 @@ function update() {
     context.fillStyle = "white";
     context.font="45px sans-serif";
     context.fillText(score, 5, 45);
+
+    if (gameOver) {
+        context.fillText("Game Over", 5, 90);
+    } 
 
 }
 
@@ -150,6 +151,14 @@ function moveBird(e) {
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
         //jump
         velocityY = -6;
+
+        //game over reset
+        if (gameOver) {
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
     }
 }
 function detectCollision(a, b) {
